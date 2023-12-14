@@ -17,7 +17,7 @@ def titre(title):
     for i, lettre in enumerate(title):
         random_color = random_color_generator()
         texte_titre = pygame.font.SysFont('Calibri', 90, bold=True).render(lettre, True, random_color)
-        texte_titre_rect = texte_titre.get_rect(center=(50 + i * 50, 100))
+        texte_titre_rect = texte_titre.get_rect(center=(50 + i * 50, 75))
         Fenetre.blit(texte_titre, texte_titre_rect)
     pygame.display.flip()
     pygame.time.Clock().tick(10)
@@ -34,24 +34,38 @@ def main_menu():
 
         titre("Tic-Tac-Toe")
 
+        if j < 4:
+            if i == 9:
+                j+=1
+            if i < 9:
+                menu_img = pygame.image.load(f"img/{i}.png")
+                turn = pygame.transform.rotate(menu_img, j*90)
+                Fenetre_menu.blit(turn, (W // 2 - menu_img.get_width() // 2, 150))
+                pygame.time.get_ticks()
+                i+=1
+            else:
+                i=1
+        else:
+            j=0
+
         random_color = random_color_generator()
-        play_button_rect = pygame.Rect(W // 2 - 250, 690 - 50, 500, 50)
+        play_button_rect = pygame.Rect(W // 2 - 250, 630, 500, 50)
         pygame.draw.rect(Fenetre, (51, 0, 102), play_button_rect)
 
         if play_button_rect.collidepoint(pygame.mouse.get_pos()):
             play_text = pygame.font.SysFont('Calibri', 60, italic=True, bold=True).render("Jouer", True, random_color)
         else:
             play_text = pygame.font.SysFont('Calibri', 60, italic=True, bold=True).render("Jouer", True, (210, 180, 222))
-        play_rect = play_text.get_rect(center=(W // 2, 670))
+        play_rect = play_text.get_rect(center=(W // 2, 660))
         Fenetre.blit(play_text, play_rect)
 
-        score_button_rect = pygame.Rect(W // 2 - 250, 705, 500, 50)
+        score_button_rect = pygame.Rect(W // 2 - 250, 700, 500, 50)
         pygame.draw.rect(Fenetre, (51, 0, 102), score_button_rect)
         if score_button_rect.collidepoint(pygame.mouse.get_pos()):
             score_text = pygame.font.SysFont('Calibri', 60, italic=True, bold=True).render("Score", True, (random_color))
         else:
             score_text = pygame.font.SysFont('Calibri', 60, italic=True, bold=True).render("Score", True, (210, 180, 222))
-        score_rect = score_text.get_rect(center=(W // 2, 735))
+        score_rect = score_text.get_rect(center=(W // 2, 730))
         Fenetre.blit(score_text, score_rect)
 
         credit = pygame.font.SysFont('Calibri', 18).render("Tic-Tac-Toe par Lucas Martinie", True, (189, 189, 189))
@@ -64,19 +78,7 @@ def main_menu():
             show_score()
         elif credit_rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]: 
             credit_p()
-        if j < 4:
-            if i == 9:
-                j+=1
-            if i < 9:
-                menu_img = pygame.image.load(f"img/{i}.png")
-                turn = pygame.transform.rotate(menu_img, j*90)
-                Fenetre_menu.blit(turn, (W // 2 - menu_img.get_width() // 2, 175))
-                pygame.time.get_ticks()
-                i+=1
-            else:
-                i=1
-        else:
-            j=0
+
         pygame.display.flip()
 
 def username():
